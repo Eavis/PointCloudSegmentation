@@ -1,1 +1,3 @@
 # PointCloudSegmentation
+
+![](segmentedlivingarea.gif)
