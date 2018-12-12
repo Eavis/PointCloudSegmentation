@@ -1,6 +1,10 @@
 # PointCloudSegmentation
 
 ![](segmentedlivingarea.gif)
+<p align="center">
+  <img src="compare.png"  title="render and segmentation">
+</p>
 
 
-![Alt text](compare.png? raw=true "Render and Segmented result display" style=centerme)
+
+
