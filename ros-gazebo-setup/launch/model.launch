@@ -7,14 +7,14 @@
 
   <!--Invoke gazebo's launch file, passing in the arguments defined above-->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <!--arg name="world_name" value="$(find bim_surveyor)/worlds/empty.world"/-->
+    <!--arg name="world_name" value="$(find ros-project-setup)/worlds/empty.world"/-->
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="$(arg gui)"/>
   </include>
 
 
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find bim_surveyor)/urdf/sensors.xacro'"/>
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ros-project-setup)/urdf/sensors.xacro'"/>
 
   <node name="sensor_frame_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
     args="-urdf -param robot_description -model sensor_frame" />
@@ -23,10 +23,10 @@
     </node>
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" output="screen"/>
-    <node name="colorPC" pkg="bim_surveyor" type="colorPC" output="screen">
+    <node name="colorPC" pkg="ros-project-setup" type="colorPC" output="screen">
     </node>
     <!-- RViz -->
      <arg name="rviz" default="true"/>
-     <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(anon rviz)" respawn="false" output="screen" args="-d $(find bim_surveyor)/rviz/example.rviz" />
+     <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(anon rviz)" respawn="false" output="screen" args="-d $(find ros-project-setup)/rviz/example.rviz" />
 
 </launch>

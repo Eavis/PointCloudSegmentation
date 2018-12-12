@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(bim_surveyor)
+project(ros-project-setup)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -112,7 +112,7 @@ add_definitions(${PCL_DEFINITIONS})
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-#  LIBRARIES bim_surveyor
+#  LIBRARIES ros-project-setup
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
@@ -130,7 +130,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/bim_surveyor.cpp
+#   src/${PROJECT_NAME}/ros-project-setup.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -141,7 +141,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/bim_surveyor_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/ros-project-setup_node.cpp)
 add_executable(survey_node src/survey_node.cpp src/read_poses.cpp)
 
 ## Rename C++ executable without prefix
@@ -200,7 +200,7 @@ target_link_libraries(survey_node ${catkin_LIBRARIES})
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_bim_surveyor.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_ros-project-setup.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

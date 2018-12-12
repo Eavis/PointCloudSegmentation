@@ -6,9 +6,9 @@
   <xacro:property name="cameraSize" value="0.05"/>
   <xacro:property name="cameraMass" value="0.1"/>
 
-  <xacro:include filename="$(find bim_surveyor)/urdf/simubot.gazebo" />
-  <xacro:include filename="$(find bim_surveyor)/urdf/materials.xacro" />
-  <xacro:include filename="$(find bim_surveyor)/urdf/macros.xacro" />
+  <xacro:include filename="$(find ros-project-setup)/urdf/simubot.gazebo" />
+  <xacro:include filename="$(find ros-project-setup)/urdf/materials.xacro" />
+  <xacro:include filename="$(find ros-project-setup)/urdf/macros.xacro" />
 
   <link name='chassis'>
     <pose>0 0 0.1 0 0 0</pose>
