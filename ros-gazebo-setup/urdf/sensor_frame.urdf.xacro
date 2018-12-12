@@ -1,0 +1,77 @@
+<?xml version='1.0'?>
+
+<robot name="sensor_frame" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="gpu" default="false"/>
+  <xacro:property name="gpu" value="$(arg gpu)" />
+
+  <!--The HDL-32E.urdf.xacro file included from velodyne_description below defines a macro
+      that instanciates a 32-laser velodyne sensor into the model defined by this file.
+      The sub-model expects to join to some root link in the main model, so we define a stub one here-->
+  <link name='base'>
+    <pose>0 0 0 0 0 0</pose>
+  </link>
+
+  <!--Basic link to define an object to turn into a sensor (see <gazebo reference="camera"> tag below)-->
+  <link name='camera'>
+    <pose>0 0 0 0 0 0</pose>
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name='camera-to-base' type='fixed'>
+    <origin xyz="0 0 0.3" rpy="0 0 0"/>
+    <parent link='base'/>
+    <child link='camera'/>
+  </joint>
+
+  <!--xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/-->
+  <xacro:include filename="$(find bim_surveyor)/urdf/HDL-32E.urdf.xacro"/>
+
+  <HDL-32E parent="base" name="velodyne" topic="/velodyne_points" hz="10" samples="220" gpu="${gpu}">
+    <!--origin xyz="0 0 0.6" rpy="0 0 0" /-->
+    <origin xyz="0 0 0.4" rpy="0 0 0"/>
+  </HDL-32E>
+
+  <!--Directs Gazebo to treat this model as static, i.e. no motion. (Other objects can still collide with it)-->
+  <gazebo>
+    <static>true</static>
+  </gazebo>
+
+  <!--code to install a camera sensor in the link named above-->
+  <gazebo reference="camera">
+    <sensor type="camera" name="camera1">
+      <update_rate>30.0</update_rate>
+      <visualize>true</visualize>
+      <camera name="head">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>1024</width>
+          <height>1024</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.2</near>
+          <far>300</far>
+        </clip>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <cameraName>camera1</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>camera</frameName>
+        <hackBaseline>0.0</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>

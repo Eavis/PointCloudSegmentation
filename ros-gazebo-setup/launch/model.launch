@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!--whether to launch the GUI for gazebo-->
+  <arg name="gui" default="true"/>
+  <!--path to the subject mesh-->
+  <!--arg name="subject"/-->
+
+  <!--Invoke gazebo's launch file, passing in the arguments defined above-->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!--arg name="world_name" value="$(find bim_surveyor)/worlds/empty.world"/-->
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find bim_surveyor)/urdf/sensors.xacro'"/>
+
+  <node name="sensor_frame_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+    args="-urdf -param robot_description -model sensor_frame" />
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen">
+      <param name="use_gui" value="False"/>
+    </node>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" output="screen"/>
+    <node name="colorPC" pkg="bim_surveyor" type="colorPC" output="screen">
+    </node>
+    <!-- RViz -->
+     <arg name="rviz" default="true"/>
+     <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(anon rviz)" respawn="false" output="screen" args="-d $(find bim_surveyor)/rviz/example.rviz" />
+
+</launch>
